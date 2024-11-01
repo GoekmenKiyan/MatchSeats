@@ -1,0 +1,12 @@
+/* Stellt sicher, dass das Canvas den gesamten Bildschirm ausfüllt */
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#stadiumCanvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
