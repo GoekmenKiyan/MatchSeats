@@ -1,15 +1,14 @@
 {
   "name": "matchseatsproject",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "three": "^0.170.0"
   },

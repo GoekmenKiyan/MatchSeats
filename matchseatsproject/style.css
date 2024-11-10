@@ -1,12 +1,15 @@
-/* Stellt sicher, dass das Canvas den gesamten Bildschirm ausfüllt */
+/* style.css */
+
 body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
 
-#stadiumCanvas {
-    display: block;
-    width: 100vw;
+#canvas-container {
+    width: 100%;
     height: 100vh;
+    background-color: #111; /* Hintergrundfarbe, um zu prüfen, ob der Container angezeigt wird */
 }
