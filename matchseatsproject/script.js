@@ -2,10 +2,12 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { gsap } from 'gsap';
+import { gsap } from 'gsap'; // GSAP für Animationen einfügen
 
+// Szene, Kamera und Renderer einrichten
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
 const renderer = new THREE.WebGLRenderer({ antialias: false });
 renderer.setPixelRatio(window.devicePixelRatio * 0.5);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -19,8 +21,6 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.minDistance = 10;
 controls.maxDistance = 50;
-controls.rotateSpeed = -1.0;
-controls.zoomSpeed = 1.0;
 
 // Invertiere die Drehsteuerung
 controls.rotateSpeed = -1.0;
@@ -34,13 +34,13 @@ scene.add(directionalLight);
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+
 const loader = new GLTFLoader();
 loader.setDRACOLoader(dracoLoader);
 
 let seatMeshes = [];
 const seatOriginalColors = {};
 const seatStatus = {};
-let selectedSeat = null;
 
 loader.load('assets/stadium.glb', function (gltf) {
     const stadium = gltf.scene;
@@ -61,20 +61,22 @@ loader.load('assets/stadium.glb', function (gltf) {
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
+let selectedSeat = null;
 
 const statusDisplay = document.getElementById('status-display');
 const bookButton = document.getElementById('book-button');
 const resetCameraButton = document.getElementById('reset-camera-button');
 const deselectSeatButton = document.getElementById('deselect-seat-button');
 
-// Event-Listener für Buchung
+// Buchungs-Button Event Listener
 bookButton.addEventListener('click', () => {
     if (selectedSeat) {
-        seatStatus[selectedSeat.name] = 'booked'; // Setze den Sitzstatus auf "gebucht"
-        selectedSeat.material.color.set(0x808080); // Setze die Farbe auf "gebucht"
+        seatStatus[selectedSeat.name] = 'booked';
+        selectedSeat.material.color.set(0x808080);
         saveSeatStatus();
-        selectedSeat = null; // Setze den ausgewählten Sitz zurück
+        selectedSeat = null;
         updateStatusDisplay();
+        moveCameraToDefault();
     } else {
         alert("Bitte einen Sitz auswählen, bevor du buchst!");
     }
@@ -122,6 +124,7 @@ function onSeatClick(event) {
     }
 }
 
+// Kamera-Bewegungsfunktion zur Sitzplatz-Position
 function moveCameraToSeat(seat) {
     const seatPosition = seat.position.clone();
 
@@ -131,7 +134,7 @@ function moveCameraToSeat(seat) {
         seatPosition.z - 1.5
     );
 
-    const lookAtTarget = new THREE.Vector3(seatPosition.x, seatPosition.y, seatPosition.z);
+    const lookAtTarget = new THREE.Vector3(0, 1, 0);
 
     gsap.to(camera.position, {
         duration: 1.5,
@@ -144,15 +147,19 @@ function moveCameraToSeat(seat) {
     });
 }
 
+// Funktion, um die Kamera auf den Sitz zu "locken" und 360°-Rotation um den Sitz zu ermöglichen
 function lockCameraToSeat(seat) {
-    controls.target.copy(seat.position);
+    const adjustedTarget = new THREE.Vector3(seat.position.x, seat.position.y + 1, seat.position.z);
+
+    controls.target.copy(adjustedTarget);
     controls.enablePan = false;
     controls.enableZoom = false;
-    controls.minDistance = 1.5;
-    controls.maxDistance = 2.5;
+    controls.minDistance = - 1;
+    controls.maxDistance = 0.4;
     controls.update();
 }
 
+// Kamera zurück zur Standardposition mit sanfter Animation
 function moveCameraToDefault() {
     const defaultPosition = new THREE.Vector3(0, 15, 30);
     const lookAtTarget = new THREE.Vector3(0, 0, 0);
@@ -168,6 +175,7 @@ function moveCameraToDefault() {
     });
 }
 
+// Kamera-Einstellungen zurücksetzen
 function unlockCamera() {
     controls.target.set(0, 0, 0);
     controls.enablePan = true;
@@ -181,7 +189,7 @@ function updateStatusDisplay() {
     if (selectedSeat) {
         statusDisplay.textContent = `Ausgewählter Sitz: ${selectedSeat.name}`;
     } else {
-        statusDisplay.textContent = 'Ausgewählter Sitz: keiner';
+        statusDisplay.textContent = 'Ausgewählter Sitz: keiner'
     }
 }
 
