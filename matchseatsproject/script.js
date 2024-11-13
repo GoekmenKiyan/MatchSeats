@@ -41,6 +41,8 @@ loader.setDRACOLoader(dracoLoader);
 let seatMeshes = [];
 const seatOriginalColors = {};
 const seatStatus = {};
+const seatPrice = 60; // Preis für jeden Sitzplatz in Euro
+
 
 loader.load('assets/stadium.glb', function (gltf) {
     const stadium = gltf.scene;
@@ -76,11 +78,13 @@ bookButton.addEventListener('click', () => {
         saveSeatStatus();
         selectedSeat = null;
         updateStatusDisplay();
+        alert(`Gesamtkosten: €${seatPrice}`); // Zeige Gesamtkosten für den aktuellen Sitz an
         moveCameraToDefault();
     } else {
         alert("Bitte einen Sitz auswählen, bevor du buchst!");
     }
 });
+
 
 // Event-Listener für Kamera zurücksetzen
 resetCameraButton.addEventListener('click', () => {
@@ -187,11 +191,12 @@ function unlockCamera() {
 
 function updateStatusDisplay() {
     if (selectedSeat) {
-        statusDisplay.textContent = `Ausgewählter Sitz: ${selectedSeat.name}`;
+        statusDisplay.textContent = `Ausgewählter Sitz: ${selectedSeat.name} | Preis: €${seatPrice}`;
     } else {
-        statusDisplay.textContent = 'Ausgewählter Sitz: keiner'
+        statusDisplay.textContent = 'Ausgewählter Sitz: keiner';
     }
 }
+
 
 function saveSeatStatus() {
     localStorage.setItem('seatStatus', JSON.stringify(seatStatus));
