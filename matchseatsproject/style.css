@@ -1,15 +1,39 @@
-/* style.css */
-
-body, html {
+/* Grundlegendes Styling */
+body {
     margin: 0;
-    padding: 0;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Canvas für das Three.js-Renderer */
 #canvas-container {
-    width: 100%;
-    height: 100vh;
-    background-color: #111; /* Hintergrundfarbe, um zu prüfen, ob der Container angezeigt wird */
+    width: 100vw;
+    height: 80vh;
+    background-color: #000;
+}
+
+/* Steuerelemente für die Buchung */
+#controls {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Buchungsbutton */
+#book-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+/* Anzeige für den ausgewählten Sitzplatz */
+#status-display {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #fff;
 }

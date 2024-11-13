@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tennisstadion Buchung</title>
+    <title>Tennisstadion Sitzplatzbuchung</title>
+    <!-- CSS-Datei einbinden -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Container für die 3D-Szene -->
+    <!-- Canvas für Three.js-Renderer -->
     <div id="canvas-container"></div>
+    
+    <!-- Steuerelemente für Buchung -->
+    <div id="controls">
+        <button id="book-button">Buchen</button>
+        <button id="reset-button">Zurücksetzen</button>
+        <p id="status-display">Ausgewählter Sitz: keiner</p>
+    </div>
 
-    <!-- Three.js und unser Script -->
-    <script src="script.js" type="module"></script>
+    <!-- Drei.js und das Hauptskript einbinden -->
+    <script type="module" src="script.js"></script>
+
 </body>
 </html>
