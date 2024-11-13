@@ -8,8 +8,8 @@ import { gsap } from 'gsap'; // GSAP für Animationen einfügen
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-const renderer = new THREE.WebGLRenderer({ antialias: false });
-renderer.setPixelRatio(window.devicePixelRatio * 0.5);
+const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+renderer.setPixelRatio(window.devicePixelRatio * 0.6);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('canvas-container').appendChild(renderer.domElement);
 
@@ -26,9 +26,10 @@ controls.maxDistance = 50;
 controls.rotateSpeed = -1.0;
 controls.zoomSpeed = 1.0;
 
-const ambientLight = new THREE.AmbientLight(0x404040, 2);
+const ambientLight = new THREE.AmbientLight(0x404040, 8);
 scene.add(ambientLight);
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3.5);
 directionalLight.position.set(0, 10, 10);
 scene.add(directionalLight);
 
