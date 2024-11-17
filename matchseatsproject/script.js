@@ -45,7 +45,7 @@ const seatStatus = {};
 const seatPrice = 60; // Preis für jeden Sitzplatz in Euro
 
 
-loader.load('assets/stadium.glb', function (gltf) {
+loader.load('/stadium.glb', function (gltf) {
     const stadium = gltf.scene;
     stadium.traverse((child) => {
         if (child.isMesh && child.name.startsWith("Sitz")) {
